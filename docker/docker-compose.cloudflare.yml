@@ -1,0 +1,27 @@
+services:
+  tailscale:
+    image: docker.io/tailscale/tailscale:stable
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    restart: unless-stopped
+    env_file:
+      - ./environment/tailscale.env
+      - ./environment/${HOSTNAME}/tailscale.env
+    volumes:
+      - ./storage/tailscale/ts-authkey-test:/var/lib/tailscale
+      - /dev/net/tun:/dev/net/tun
+    healthcheck:
+      test: 'tailscale status --active || exit 1'
+  cloudflare:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: 'tunnel --metrics=127.0.0.1:2000 run'
+    env_file:
+      - ./environment/${HOSTNAME}/cloudflare.env
+    network_mode: service:tailscale
+    depends_on:
+      tailscale:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'cloudflared', 'tunnel', '--metrics=127.0.0.1:2000', 'ready']

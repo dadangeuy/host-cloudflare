@@ -1,18 +1,4 @@
 services:
-  tailscale:
-    image: docker.io/tailscale/tailscale:stable
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
-    restart: unless-stopped
-    env_file:
-      - ./environment/tailscale.env
-      - ./environment/${HOSTNAME}/tailscale.env
-    volumes:
-      - ./storage/tailscale/ts-authkey-test:/var/lib/tailscale
-      - /dev/net/tun:/dev/net/tun
-    healthcheck:
-      test: 'tailscale status --active || exit 1'
   cloudflare:
     image: cloudflare/cloudflared:latest
     restart: unless-stopped

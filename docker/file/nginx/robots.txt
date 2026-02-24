@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://seo.rizaldi.org/sitemap.txt

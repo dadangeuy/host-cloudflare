@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://rizaldi.org/sitemap.xml
+Sitemap: https://rizaldi.org/sitemap.txt

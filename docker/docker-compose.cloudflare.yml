@@ -1,7 +1,6 @@
 services:
   cloudflare:
     image: cloudflare/cloudflared:latest
-    restart: unless-stopped
     command: 'tunnel --metrics=127.0.0.1:2000 run'
     env_file:
       - ./environment/${HOSTNAME}/cloudflare.env

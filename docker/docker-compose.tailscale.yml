@@ -6,7 +6,7 @@ services:
       - SYS_MODULE
     env_file:
       - ./environment/tailscale.env
-      - ./environment/${HOSTNAME}/tailscale.env
+      - ./environment/${STAGE}/tailscale.env
     volumes:
       - ./storage/tailscale/ts-authkey-test:/var/lib/tailscale
       - /dev/net/tun:/dev/net/tun

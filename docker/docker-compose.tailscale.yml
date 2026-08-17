@@ -5,7 +5,7 @@ services:
       - ./environment/tailscale.env
       - ./environment/${STAGE}/tailscale.env
     volumes:
-      - ./storage/tailscale/ts-authkey-test:/var/lib/tailscale
+      - ./storage/tailscale/tailscale-state:/var/lib/tailscale
       - /dev/net/tun:/dev/net/tun
     cap_add:
       - NET_ADMIN

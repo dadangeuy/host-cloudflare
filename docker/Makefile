@@ -7,7 +7,7 @@ start:
 	docker compose up -d --wait
 
 stop:
-	docker compose down --volumes
+	docker compose down
 
 update:
 	docker compose down

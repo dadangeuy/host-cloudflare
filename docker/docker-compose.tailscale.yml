@@ -1,14 +1,15 @@
 services:
   tailscale:
     image: docker.io/tailscale/tailscale:stable
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
     env_file:
       - ./environment/tailscale.env
       - ./environment/${STAGE}/tailscale.env
     volumes:
       - ./storage/tailscale/ts-authkey-test:/var/lib/tailscale
       - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    network_mode: host
     healthcheck:
       test: 'tailscale status --active'

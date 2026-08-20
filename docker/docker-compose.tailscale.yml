@@ -4,6 +4,8 @@ services:
     env_file:
       - ./environment/tailscale.env
       - ./environment/${STAGE}/tailscale.env
+    environment:
+      - TS_AUTHKEY
     volumes:
       - ./storage/tailscale/tailscale-state:/var/lib/tailscale
       - /dev/net/tun:/dev/net/tun

@@ -5,6 +5,8 @@ services:
     env_file:
       - ./environment/cloudflare.env
       - ./environment/${STAGE}/cloudflare.env
+    environment:
+      - TUNNEL_TOKEN
     network_mode: service:tailscale
     depends_on:
       tailscale:

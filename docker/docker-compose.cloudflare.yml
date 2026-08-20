@@ -1,10 +1,10 @@
 services:
-  cloudflare:
+  tunnel:
     image: cloudflare/cloudflared:latest
     command: 'tunnel --metrics=127.0.0.1:2000 run'
     env_file:
-      - ./environment/cloudflare.env
-      - ./environment/${STAGE}/cloudflare.env
+      - ./environment/tunnel.env
+      - ./environment/${STAGE}/tunnel.env
     environment:
       - TUNNEL_TOKEN
     network_mode: service:tailscale

@@ -9,7 +9,7 @@ services:
       - /dev/net/tun:/dev/net/tun
     cap_add:
       - NET_ADMIN
-      - SYS_MODULE
+      - NET_RAW
     network_mode: host
     healthcheck:
       test: 'tailscale status --active'

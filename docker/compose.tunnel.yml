@@ -7,9 +7,6 @@ services:
       - ./environment/${STAGE}/tunnel.env
     environment:
       - TUNNEL_TOKEN
-    network_mode: service:tailscale
-    depends_on:
-      tailscale:
-        condition: service_healthy
+    network_mode: container:tailscale
     healthcheck:
       test: ['CMD', 'cloudflared', 'tunnel', '--metrics=127.0.0.1:2000', 'ready']

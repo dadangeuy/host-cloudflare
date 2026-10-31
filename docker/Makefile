@@ -14,6 +14,7 @@ update:
 	git pull --rebase
 	docker compose pull
 	make start
+	docker system prune -a -f
 
 listen:
 	docker compose logs -f

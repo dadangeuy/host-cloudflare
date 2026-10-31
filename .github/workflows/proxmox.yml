@@ -1,0 +1,22 @@
+name: Deploy to Proxmox
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: '${{ secrets.TS_OAUTH_CLIENT_ID }}'
+          audience: '${{ secrets.TS_AUDIENCE }}'
+          tags: 'tag:github'
+      - name: Update cloudflare-1
+        env:
+          SSHPASS: '${{ secrets.SSH_PASSWORD }}'
+        run: sshpass -e ssh -o StrictHostKeyChecking=accept-new user@cloudflare-1 "bash -lc 'cd /docker/services/host-cloudflare/docker && make update'"
+permissions:
+  id-token: write

@@ -10,10 +10,10 @@ stop:
 	docker compose down
 
 update:
-	docker compose down
+	make stop
 	git pull --rebase
 	docker compose pull
-	docker compose up -d --wait
+	make start
 
 listen:
 	docker compose logs -f

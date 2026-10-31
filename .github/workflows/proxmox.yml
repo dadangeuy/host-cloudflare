@@ -17,6 +17,6 @@ jobs:
       - name: Update cloudflare-1
         env:
           SSHPASS: '${{ secrets.SSH_PASSWORD }}'
-        run: sshpass -e ssh -o StrictHostKeyChecking=accept-new user@cloudflare-1 "bash -lc 'cd /docker/services/host-cloudflare/docker && make update'"
+        run: sshpass -e ssh -o StrictHostKeyChecking=accept-new user@cloudflare-1 "bash -lc 'cd /docker/services/${{ github.event.repository.name }}/docker && make update'"
 permissions:
   id-token: write

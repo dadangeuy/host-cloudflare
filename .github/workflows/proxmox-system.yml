@@ -1,0 +1,29 @@
+name: Proxmox (System)
+on:
+  schedule:
+    - cron: "0 0 * * MON"
+  workflow_dispatch:
+jobs:
+  deploy:
+    name: Deploy system update
+    environment: proxmox
+    runs-on: ubuntu-latest
+    steps:
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: '${{ secrets.TS_OAUTH_CLIENT_ID }}'
+          audience: '${{ secrets.TS_AUDIENCE }}'
+          tags: 'tag:github'
+      - name: Update cloudflare-1
+        env:
+          SSHPASS: '${{ secrets.SSH_PASSWORD }}'
+        run: |
+          sshpass -e ssh -o StrictHostKeyChecking=accept-new user@cloudflare-1 \
+            "sudo env DEBIAN_FRONTEND=noninteractive NEEDRESTART_MODE=a APT_LISTCHANGES_FRONTEND=none sh -c '
+              apt update &&
+              apt -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold full-upgrade &&
+              apt -y autoremove
+            '"
+permissions:
+  id-token: write

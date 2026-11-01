@@ -1,11 +1,12 @@
-name: Deploy to Proxmox
+name: Proxmox (Docker)
 on:
   push:
     branches:
       - main
 jobs:
   deploy:
-    name: Deploy
+    name: Deploy docker update
+    environment: proxmox
     runs-on: ubuntu-latest
     steps:
       - name: Connect to Tailscale

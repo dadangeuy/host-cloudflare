@@ -19,11 +19,15 @@ jobs:
         env:
           SSHPASS: '${{ secrets.SSH_PASSWORD }}'
         run: |
-          sshpass -e ssh -o StrictHostKeyChecking=accept-new user@cloudflare-1 \
+          SSH="sshpass -e ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=60 user@cloudflare-1"
+          $SSH \
             "sudo env DEBIAN_FRONTEND=noninteractive NEEDRESTART_MODE=a APT_LISTCHANGES_FRONTEND=none sh -c '
               apt update &&
               apt -y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold full-upgrade &&
               apt -y autoremove
             '"
+          $SSH "sudo reboot"
+          sleep 300
+          $SSH "exit 0"
 permissions:
   id-token: write

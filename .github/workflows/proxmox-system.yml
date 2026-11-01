@@ -1,7 +1,7 @@
 name: Proxmox (System)
 on:
   schedule:
-    - cron: "0 0 * * MON"
+    - cron: "0 0 * * TUE"
   workflow_dispatch:
 jobs:
   deploy:
